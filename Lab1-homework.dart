@@ -1,7 +1,7 @@
 
 //NAME   : INNOCENT CHIGWENDE
 //SUBJECT: OOP
-//TASK   : Write application that prints matrix with rows and columns, number of rows and columns are input parameters 
+
 
 
 void printMatrix(int rows, int cols) {
