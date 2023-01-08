@@ -2,50 +2,57 @@
 //SUBJECT: OOP
 //TASK   : Design simple domain in OOP using DART classes a)Classes should have some attributes and methods b) Use class c) Use override toString()
 
-class Animal {
+class University {
   String name;
-  int age;
+  List<Department> departments;
 
-  Animal(this.name, this.age);
-
-  void eat() {
-    print('$name is eating');
-  }
-
-  void sleep() {
-    print('$name is sleeping');
-  }
-
-  @override
-  String toString() {
-    return 'Animal: name=$name, age=$age';
-  }
+  University(this.name, this.departments);
 }
 
-class Dog extends Animal {
-  String breed;
+class Department {
+  String name;
+  List<Course> courses;
 
-  Dog(String name, int age, this.breed) : super(name, age);
+  Department(this.name, this.courses);
+}
 
-  void bark() {
-    print('$name is barking');
-  }
+class Course {
+  String name;
+  int credits;
+
+  Course(this.name, this.credits);
+}
+
+class Student {
+  String name;
+  List<Course> courses;
+
+  Student(this.name, this.courses);
 
   @override
   String toString() {
-    return 'Dog: name=$name, age=$age, breed=$breed';
+    return 'Student: $name, Courses: $courses';
   }
 }
 
 void main() {
-  Animal a = Animal('Lion', 5);
-  a.eat();
-  a.sleep();
-  print(a);
+  // Create a list of courses
+  var courses = [
+    Course('Math', 3),
+    Course('Science', 4),
+    Course('History', 2)
+  ];
 
-  Dog d = Dog('Buddy', 3, 'Labrador');
-  d.eat();
-  d.sleep();
-  d.bark();
-  print(d);
+  // Create a list of departments
+  var departments = [
+    Department('Arts', courses),
+    Department('Sciences', courses)
+  ];
+
+  // Create a university
+  var university = University('My University', departments);
+
+  // Create a student
+  var student = Student('John Doe', courses);
+  print(student);
 }
