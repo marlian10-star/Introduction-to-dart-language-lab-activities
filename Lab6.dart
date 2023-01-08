@@ -1,101 +1,71 @@
 //NAME   : INNOCENT CHIGWENDE
 //SUBJECT: OOP
 
-// Abstract class representing the core concept of a Vehicle
 abstract class Vehicle {
-  int gears = 0;
-  int maxSpeed = 0;
-  int seats = 0;
-  String type = '';
+  // Abstract class for the core concept of a vehicle
+  int _maxSpeed;
+  int _seats;
+  String _type;
 
-  // Private method to execute internal function
-  void _startEngine() {
-    print('Starting engine...');
-  }
+  void setMaxSpeed(int speed) => _maxSpeed = speed;
+  void setSeats(int seats) => _seats = seats;
+  void setType(String type) => _type = type;
 
-  // Method to be implemented by subclasses
-  void drive();
+  int getMaxSpeed() => _maxSpeed;
+  int getSeats() => _seats;
+  String getType() => _type;
+
+  void startEngine() => print('Engine started');
+  void stopEngine() => print('Engine stopped');
 }
 
-// Class representing a Car, which inherits from the Vehicle class
 class Car extends Vehicle {
-  Car(int gears, int maxSpeed, int seats, String type) {
-    this.gears = gears;
-    this.maxSpeed = maxSpeed;
-    this.seats = seats;
-    this.type = type;
-  }
+  // Inheritance: Car class extends the Vehicle class
+  int _gears;
 
-  @override
-  void drive() {
-    _startEngine();
-    print('Driving car...');
+  void setGears(int gears) => _gears = gears;
+  int getGears() => _gears;
+
+  void shiftGearUp() => print('Shifting gear up');
+  void shiftGearDown() => print('Shifting gear down');
+}
+
+class PremiumCarFabric {
+  // Fabric class for creating premium cars
+  static Car createCar(int maxSpeed, int seats, String type) {
+    Car car = Car();
+    car.setMaxSpeed(maxSpeed);
+    car.setSeats(seats);
+    car.setType(type);
+    car.setGears(6); // Premium cars come with 6 gears
+    return car;
   }
 }
 
-// Interface representing features that can be added to a car
-abstract class CarFeatures {
-  void addSunroof();
-  void addGPS();
-  void addEntertainmentSystem();
-}
-
-// Class representing a PremiumCar, which inherits from the Car class and
-// implements the CarFeatures interface
-class PremiumCar extends Car implements CarFeatures {
-  PremiumCar(int gears, int maxSpeed, int seats, String type)
-      : super(gears, maxSpeed, seats, type);
-
-  @override
-  void addSunroof() {
-    print('Adding sunroof...');
-  }
-
-  @override
-  void addGPS() {
-    print('Adding GPS...');
-  }
-
-  @override
-  void addEntertainmentSystem() {
-    print('Adding entertainment system...');
+class BasicCarFabric {
+  // Fabric class for creating basic cars
+  static Car createCar(int maxSpeed, int seats, String type) {
+    Car car = Car();
+    car.setMaxSpeed(maxSpeed);
+    car.setSeats(seats);
+    car.setType(type);
+    car.setGears(5); // Basic cars come with 5 gears
+    return car;
   }
 }
 
-// Class representing a BasicCar, which also inherits from the Car class
-class BasicCar extends Car {
-  BasicCar(int gears, int maxSpeed, int seats, String type)
-      : super(gears, maxSpeed, seats, type);
-}
+void main(List<String> args) {
+  // Parse command line arguments for car configuration
+  int maxSpeed = int.parse(args[0]);
+  int seats = int.parse(args[1]);
+  String type = args[2];
 
-// Fabric class with method to create a car
-class CarFabric {
-  static Car createCar(
-      String fabricType, int gears, int maxSpeed, int seats, String type) {
-    if (fabricType == 'premium') {
-      return PremiumCar(gears, maxSpeed, seats, type);
-    } else if (fabricType == 'basic') {
-      return BasicCar(gears, maxSpeed, seats, type);
-    } else {
-      throw Exception('Invalid fabric type');
-    }
-  }
-}
+  // Create a car using the fabric classes
+  Car car = PremiumCarFabric.createCar(maxSpeed, seats, type);
 
-void main() {
-  // Read configuration from command line
-  var gears = 4;
-  var maxSpeed = 180;
-  var seats = 5;
-  var type = 'cabrio';
-  var fabricType = 'premium';
-
-  // Create car using fabric method
-  var car = CarFabric.createCar(fabricType, gears, maxSpeed, seats, type);
-
-  // Print details about the car
-  print('Car gears: ${car.gears}');
-  print('Car max speed: ${car.maxSpeed}');
-  print('Car seats: ${car.seats}');
-  print('Car type: ${car.type}');
+  // Use getters to print some details about the car
+  print('Max speed: ${car.getMaxSpeed()}');
+  print('Seats: ${car.getSeats()}');
+  print('Type: ${car.getType()}');
+  print('Gears: ${car.getGears()}');
 }
